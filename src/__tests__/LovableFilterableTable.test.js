@@ -5,32 +5,24 @@ import LovableFilterableTable from '../LovableFilterableTable'
 import { tableSchema } from '../App'
 
 describe('LovableFilterableTable', () => {
-  it('renders without crashing', () => {
+  let wrapper
+  // ...
+  describe('when given empty `items`', () => {
     const items = []
 
-    const div = document.createElement('div')
-    ReactDOM.render(
-      <LovableFilterableTable items={items} schema={tableSchema} />,
-      div
-    )
+    beforeEach(() => {
+      wrapper = shallow(
+        <LovableFilterableTable items={items} schema={tableSchema} />
+      )
+    })
+
+    it('should still render search box', () => {
+      expect(wrapper.find('input').exists()).toBe(true)
+    })
+
+    it('should have no table rows', () => {
+      expect(wrapper.find('tbody > tr').exists()).toBe(false)
+    })
   })
-
-  it("should still render search box", () => {
-    const items = [];
-
-    const wrapper = shallow(
-      <LovableFilterableTable items={items} schema={tableSchema} />
-    );
-    expect(wrapper.find("input").exists()).toBe(true);
-  })
-
-  it("should have no table rows", () => {
-    const items = [];
-
-    const wrapper = shallow(
-      <LovableFilterableTable items={items} schema={tableSchema} />
-    );
-    expect(wrapper.find("tbody > tr").exists()).toBe(false);
-  })  
-
+  
 })
