@@ -1,61 +1,61 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import "./LovableFilterableTable.css";
+import './LovableFilterableTable.css'
 
 const isLovedStyle = {
-  backgroundColor: "rgba(255, 182, 193, 0.02)"
-};
+  backgroundColor: 'rgba(255, 182, 193, 0.02)'
+}
 
 const tdStyle = {
-  padding: "5px"
-};
+  padding: '5px'
+}
 
 const getObjectValues = item => {
   // I love you, JavaScript!!!
-  if (typeof Object.values === "function") {
-    return Object.values(item);
+  if (typeof Object.values === 'function') {
+    return Object.values(item)
   } else {
-    return Object.keys(item).map(k => item[k]);
+    return Object.keys(item).map(k => item[k])
   }
-};
+}
 
 const filterMatches = (filter, items) => {
   return items.filter(item => {
     return getObjectValues(item).find(
-      property => property && property.match(new RegExp(filter, "i"))
-    );
-  });
-};
+      property => property && property.match(new RegExp(filter, 'i'))
+    )
+  })
+}
 
 class LovableFilterableTable extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      filter: "",
+      filter: '',
       matches: this.props.items
-    };
+    }
   }
 
   updateFilter = (filter, items) => {
     this.setState(() => ({
       filter: filter,
       matches: filterMatches(filter, items)
-    }));
-  };
+    }))
+  }
 
   onFilterChange = e => {
-    this.updateFilter(e.target.value, this.props.items);
-  };
+    this.updateFilter(e.target.value, this.props.items)
+  }
 
   componentWillReceiveProps(nextProps) {
-    this.updateFilter(this.state.filter, nextProps.items);
+    this.updateFilter(this.state.filter, nextProps.items)
   }
 
   render() {
-    const { schema, onHeartClick } = this.props;
-    const keys = Object.keys(schema);
-    const { filter, matches } = this.state;
+    const { schema, onHeartClick } = this.props
+    const keys = Object.keys(schema)
+    const { filter, matches } = this.state
 
     return (
       <div className="LovableFilterableTable">
@@ -69,7 +69,7 @@ class LovableFilterableTable extends Component {
                     type="text"
                     placeholder="Filter..."
                     id="filterField"
-                    style={{ minWidth: "300px" }}
+                    style={{ minWidth: '300px' }}
                     onChange={this.onFilterChange}
                     value={filter}
                   />
@@ -87,17 +87,17 @@ class LovableFilterableTable extends Component {
             <tbody>
               {matches.map(item => {
                 const heartClass = item.isLoved
-                  ? "fa fa-heart"
-                  : "fa fa-heart-o";
+                  ? 'fa fa-heart'
+                  : 'fa fa-heart-o'
                 return (
                   <tr style={item.isLoved ? isLovedStyle : {}} key={item.id}>
                     {keys.map(key => {
-                      const value = item[key];
+                      const value = item[key]
                       return (
                         <td key={key} className={`item-${key}`} style={tdStyle}>
                           {value}
                         </td>
-                      );
+                      )
                     })}
                     <td className="item-heart">
                       {
@@ -109,14 +109,14 @@ class LovableFilterableTable extends Component {
                       }
                     </td>
                   </tr>
-                );
+                )
               })}
             </tbody>
           </table>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default LovableFilterableTable;
+export default LovableFilterableTable
