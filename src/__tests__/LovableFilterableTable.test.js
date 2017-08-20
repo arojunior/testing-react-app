@@ -23,5 +23,14 @@ describe('LovableFilterableTable', () => {
     );
     expect(wrapper.find("input").exists()).toBe(true);
   })
-    
+
+  it("should have no table rows", () => {
+    const items = [];
+
+    const wrapper = shallow(
+      <LovableFilterableTable items={items} schema={tableSchema} />
+    );
+    expect(wrapper.find("tbody > tr").exists()).toBe(false);
+  })  
+
 })
