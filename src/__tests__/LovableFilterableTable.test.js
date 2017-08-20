@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { shallow } from 'enzyme'
 import LovableFilterableTable from '../LovableFilterableTable'
 import { tableSchema } from '../App'
 
@@ -13,4 +14,14 @@ describe('LovableFilterableTable', () => {
       div
     )
   })
+
+  it("should still render search box", () => {
+    const items = [];
+
+    const wrapper = shallow(
+      <LovableFilterableTable items={items} schema={tableSchema} />
+    );
+    expect(wrapper.find("input").exists()).toBe(true);
+  })
+    
 })
