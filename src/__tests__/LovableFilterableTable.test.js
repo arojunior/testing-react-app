@@ -4,6 +4,21 @@ import { shallow } from 'enzyme'
 import LovableFilterableTable from '../LovableFilterableTable'
 import { tableSchema } from '../App'
 
+import fs from 'fs'
+import path from 'path'
+
+const SAMPLE_RESPONSE_FILE = path.join(__dirname, '../sample-response.json')
+
+const generateItems = () => {
+  const response = fs.readFileSync(SAMPLE_RESPONSE_FILE)
+  const json = JSON.parse(response)
+
+  return json.slice(0, 30).map(item => ({
+    ...item,
+    isLoved: false
+  }))
+}
+
 describe('LovableFilterableTable', () => {
   let wrapper
   // ...
@@ -52,6 +67,48 @@ describe('LovableFilterableTable', () => {
             </td>
           )
         ).toBe(true)
+      })
+    })
+  })
+
+  describe('user enters search query', () => {
+    let items
+
+    beforeEach(() => {
+      items = generateItems()
+      wrapper = shallow(
+        <LovableFilterableTable items={items} schema={tableSchema} />
+      )
+
+      const searchBox = wrapper.find('input')
+      searchBox.simulate('change', { target: { value: 'coin' } })
+    })
+
+    it('should render a subset of matching `items`', () => {
+      const matching = items.filter(i => i.name.match(/coin/i))
+
+      matching.forEach(match => {
+        expect(
+          wrapper.containsMatchingElement(
+            <td>
+              {match.name}
+            </td>
+          )
+        ).toBe(true)
+      })
+    })
+    
+    it("should not render the `items` that don't match", () => {
+      const notMatching = items.filter(i => !i.name.match(/coin/i))
+
+      notMatching.forEach(match => {
+        expect(
+          wrapper.containsMatchingElement(
+            <td>
+              {match.name}
+            </td>
+          )
+        ).toBe(false)
       })
     })
   })
