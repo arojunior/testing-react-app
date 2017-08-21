@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LovableFilterableTable user enters search query should filter items 1`] = `
+Array [
+  "<td class=\\"item-name\\" style=\\"padding:5px;\\">Bitcoin</td>",
+  "<td class=\\"item-name\\" style=\\"padding:5px;\\">Bitcoin Cash</td>",
+  "<td class=\\"item-name\\" style=\\"padding:5px;\\">Litecoin</td>",
+  "<td class=\\"item-name\\" style=\\"padding:5px;\\">Binance Coin</td>",
+  "<td class=\\"item-name\\" style=\\"padding:5px;\\">Bytecoin</td>",
+]
+`;
+
+exports[`LovableFilterableTable user enters search query should render a subset of matching \`items\` 1`] = `"<tbody><tr><td class=\\"item-name\\" style=\\"padding:5px;\\">Bitcoin</td><td class=\\"item-symbol\\" style=\\"padding:5px;\\">BTC</td><td class=\\"item-price_usd\\" style=\\"padding:5px;\\">4069.35</td><td class=\\"item-percent_change_1h\\" style=\\"padding:5px;\\">-0.21</td><td class=\\"item-percent_change_24h\\" style=\\"padding:5px;\\">-1.09</td><td class=\\"item-percent_change_7d\\" style=\\"padding:5px;\\">-3.36</td><td class=\\"item-heart\\"><i class=\\"fa fa-heart-o\\" aria-hidden=\\"true\\"></i></td></tr><tr><td class=\\"item-name\\" style=\\"padding:5px;\\">Bitcoin Cash</td><td class=\\"item-symbol\\" style=\\"padding:5px;\\">BCH</td><td class=\\"item-price_usd\\" style=\\"padding:5px;\\">619.897</td><td class=\\"item-percent_change_1h\\" style=\\"padding:5px;\\">-4.33</td><td class=\\"item-percent_change_24h\\" style=\\"padding:5px;\\">-20.3</td><td class=\\"item-percent_change_7d\\" style=\\"padding:5px;\\">104.19</td><td class=\\"item-heart\\"><i class=\\"fa fa-heart-o\\" aria-hidden=\\"true\\"></i></td></tr><tr><td class=\\"item-name\\" style=\\"padding:5px;\\">Litecoin</td><td class=\\"item-symbol\\" style=\\"padding:5px;\\">LTC</td><td class=\\"item-price_usd\\" style=\\"padding:5px;\\">46.8575</td><td class=\\"item-percent_change_1h\\" style=\\"padding:5px;\\">0.13</td><td class=\\"item-percent_change_24h\\" style=\\"padding:5px;\\">3.86</td><td class=\\"item-percent_change_7d\\" style=\\"padding:5px;\\">2.11</td><td class=\\"item-heart\\"><i class=\\"fa fa-heart-o\\" aria-hidden=\\"true\\"></i></td></tr><tr><td class=\\"item-name\\" style=\\"padding:5px;\\">Binance Coin</td><td class=\\"item-symbol\\" style=\\"padding:5px;\\">BNB</td><td class=\\"item-price_usd\\" style=\\"padding:5px;\\">2.59805</td><td class=\\"item-percent_change_1h\\" style=\\"padding:5px;\\">2.54</td><td class=\\"item-percent_change_24h\\" style=\\"padding:5px;\\">8.77</td><td class=\\"item-percent_change_7d\\" style=\\"padding:5px;\\">93.52</td><td class=\\"item-heart\\"><i class=\\"fa fa-heart-o\\" aria-hidden=\\"true\\"></i></td></tr><tr><td class=\\"item-name\\" style=\\"padding:5px;\\">Bytecoin</td><td class=\\"item-symbol\\" style=\\"padding:5px;\\">BCN</td><td class=\\"item-price_usd\\" style=\\"padding:5px;\\">0.00118761</td><td class=\\"item-percent_change_1h\\" style=\\"padding:5px;\\">-0.35</td><td class=\\"item-percent_change_24h\\" style=\\"padding:5px;\\">-2.26</td><td class=\\"item-percent_change_7d\\" style=\\"padding:5px;\\">-11.95</td><td class=\\"item-heart\\"><i class=\\"fa fa-heart-o\\" aria-hidden=\\"true\\"></i></td></tr></tbody>"`;
+
+exports[`LovableFilterableTable user enters search query testing out snapshots 1`] = `
+Object {
+  "24h_volume_usd": "2481990000.0",
+  "available_supply": "16518812.0",
+  "id": "bitcoin",
+  "isLoved": false,
+  "last_updated": "1503319469",
+  "market_cap_usd": "67220827612.0",
+  "name": "Bitcoin",
+  "percent_change_1h": "-0.21",
+  "percent_change_24h": "-1.09",
+  "percent_change_7d": "-3.36",
+  "price_btc": "1.0",
+  "price_usd": "4069.35",
+  "rank": "1",
+  "symbol": "BTC",
+  "total_supply": "16518812.0",
+}
+`;

@@ -97,7 +97,7 @@ describe('LovableFilterableTable', () => {
         ).toBe(true)
       })
     })
-    
+
     it("should not render the `items` that don't match", () => {
       const notMatching = items.filter(i => !i.name.match(/coin/i))
 
@@ -110,6 +110,21 @@ describe('LovableFilterableTable', () => {
           )
         ).toBe(false)
       })
+    })
+
+    it('testing out snapshots', () => {
+      const item = items[0]
+      expect(item).toMatchSnapshot()
+    })
+
+    it('should render a subset of matching `items`', () => {
+      expect(wrapper.find('tbody').first().html()).toMatchSnapshot()
+    })
+
+    it('should filter items', () => {
+      expect(
+        wrapper.find('tbody > tr > .item-name').map(i => i.html())
+      ).toMatchSnapshot()
     })
   })
 })
