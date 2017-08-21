@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { shallow } from 'enzyme'
+import serializer from 'jest-serializer-enzyme'
 import LovableFilterableTable from '../LovableFilterableTable'
 import { tableSchema } from '../App'
 
@@ -20,8 +21,10 @@ const generateItems = () => {
 }
 
 describe('LovableFilterableTable', () => {
+  expect.addSnapshotSerializer(serializer)
+
   let wrapper
-  // ...
+
   describe('when given empty `items`', () => {
     const items = []
 
@@ -125,6 +128,9 @@ describe('LovableFilterableTable', () => {
       expect(
         wrapper.find('tbody > tr > .item-name').map(i => i.html())
       ).toMatchSnapshot()
+    })
+    it('should filter items (with serializer!)', () => {
+      expect(wrapper.find('tbody')).toMatchSnapshot()
     })
   })
 })
