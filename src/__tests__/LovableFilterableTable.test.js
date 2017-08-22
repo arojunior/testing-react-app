@@ -133,4 +133,19 @@ describe('LovableFilterableTable', () => {
       expect(wrapper.find('tbody')).toMatchSnapshot()
     })
   })
+  describe('user clears search query', () => {
+    let items
+    beforeEach(() => {
+      items = generateItems()
+      wrapper = shallow(
+        <LovableFilterableTable items={items} schema={tableSchema} />
+      )      
+      const searchBox = wrapper.find('input')
+      searchBox.simulate('change', { target: { value: '' } })
+    })
+
+    it('should render all the items again', () => {
+      expect(wrapper.find('tbody > tr').length).toEqual(items.length)
+    })
+  })
 })
