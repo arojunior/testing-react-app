@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { shallow } from 'enzyme'
-import serializer from 'jest-serializer-enzyme'
 import LovableFilterableTable from '../LovableFilterableTable'
+import { shallow } from 'enzyme'
+
 import { tableSchema } from '../App'
 
 import fs from 'fs'
@@ -10,67 +10,56 @@ import path from 'path'
 
 const SAMPLE_RESPONSE_FILE = path.join(__dirname, '../sample-response.json')
 
-const generateItems = () => {
+const generateItems = (n = 30) => {
   const response = fs.readFileSync(SAMPLE_RESPONSE_FILE)
   const json = JSON.parse(response)
 
-  return json.slice(0, 30).map(item => ({
+  return json.slice(0, n).map(item => ({
     ...item,
     isLoved: false
   }))
 }
 
-describe('LovableFilterableTable', () => {
-  expect.addSnapshotSerializer(serializer)
+import serializer from 'jest-serializer-enzyme'
+expect.addSnapshotSerializer(serializer)
 
+describe('LovableFilterableTable', () => {
   let wrapper
+
+  it('renders without crashing', () => {
+    const items = []
+
+    const div = document.createElement('div')
+    ReactDOM.render(
+      <LovableFilterableTable items={items} schema={tableSchema} />,
+      div
+    )
+  })
 
   describe('when given empty `items`', () => {
     const items = []
 
     beforeEach(() => {
       wrapper = shallow(
-        <LovableFilterableTable items={items} schema={tableSchema} />
+        <LovableFilterableTable items={[]} schema={tableSchema} />
       )
     })
 
-    it('should still render search box', () => {
-      expect(wrapper.find('input').exists()).toBe(true)
-    })
-
-    it('should have no table rows', () => {
-      expect(wrapper.find('tbody > tr').exists()).toBe(false)
+    it('should render an empty table', () => {
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
   describe('when given some `items`', () => {
-    // Presence in this array does not indicate endorsement
-    const items = [
-      { id: 1, name: 'Bitcoin' },
-      { id: 2, name: 'Ethereum' },
-      { id: 3, name: 'Litecoin' }
-    ]
-
     beforeEach(() => {
+      const items = generateItems(3)
       wrapper = shallow(
         <LovableFilterableTable items={items} schema={tableSchema} />
       )
     })
 
-    it('should render corresponding number of table rows', () => {
-      expect(wrapper.find('tbody > tr').length).toEqual(3)
-    })
-
-    it('should include the title of each item', () => {
-      items.forEach(item => {
-        expect(
-          wrapper.containsMatchingElement(
-            <td>
-              {item.name}
-            </td>
-          )
-        ).toBe(true)
-      })
+    it('should render each item in the table', () => {
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
@@ -87,65 +76,21 @@ describe('LovableFilterableTable', () => {
       searchBox.simulate('change', { target: { value: 'coin' } })
     })
 
-    it('should render a subset of matching `items`', () => {
-      const matching = items.filter(i => i.name.match(/coin/i))
-
-      matching.forEach(match => {
-        expect(
-          wrapper.containsMatchingElement(
-            <td>
-              {match.name}
-            </td>
-          )
-        ).toBe(true)
-      })
-    })
-
-    it("should not render the `items` that don't match", () => {
-      const notMatching = items.filter(i => !i.name.match(/coin/i))
-
-      notMatching.forEach(match => {
-        expect(
-          wrapper.containsMatchingElement(
-            <td>
-              {match.name}
-            </td>
-          )
-        ).toBe(false)
-      })
-    })
-
-    it('testing out snapshots', () => {
-      const item = items[0]
-      expect(item).toMatchSnapshot()
-    })
-
-    it('should render a subset of matching `items`', () => {
-      expect(wrapper.find('tbody').first().html()).toMatchSnapshot()
-    })
-
     it('should filter items', () => {
       expect(
-        wrapper.find('tbody > tr > .item-name').map(i => i.html())
+        wrapper.find('tbody > tr > .item-name').map(n => n.text())
       ).toMatchSnapshot()
     })
-    it('should filter items (with serializer!)', () => {
-      expect(wrapper.find('tbody')).toMatchSnapshot()
-    })
-  })
-  describe('user clears search query', () => {
-    let items
-    beforeEach(() => {
-      items = generateItems()
-      wrapper = shallow(
-        <LovableFilterableTable items={items} schema={tableSchema} />
-      )      
-      const searchBox = wrapper.find('input')
-      searchBox.simulate('change', { target: { value: '' } })
-    })
 
-    it('should render all the items again', () => {
-      expect(wrapper.find('tbody > tr').length).toEqual(items.length)
+    describe('user clears search query', () => {
+      beforeEach(() => {
+        const searchBox = wrapper.find('input')
+        searchBox.simulate('change', { target: { value: '' } })
+      })
+
+      it('should render all the items again', () => {
+        expect(wrapper.find('tbody > tr').length).toEqual(items.length)
+      })
     })
   })
 })
